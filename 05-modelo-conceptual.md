@@ -9,8 +9,6 @@ En este modelo se definen las entidades principales del sistema, sus relaciones
 y cardinalidades, sirviendo como base para el modelo lógico y la implementación
 de la base de datos.
 
----
-
 ## 2. Entidades del sistema
 
 ### Cliente
@@ -19,7 +17,12 @@ Un cliente puede realizar uno o varios pedidos.
 
 ### Producto
 Representa un repuesto para motocicleta disponible para la venta.
-Cada producto tiene precio, pertenece a una marca y se controla en inventario.
+Cada producto tiene precio, pertenece a una categoría y a una marca,
+y se controla en inventario.
+
+### Categoria
+Representa la clasificación de los productos (ej: motor, frenos, eléctricos).
+Una categoría puede tener múltiples productos asociados.
 
 ### Marca
 Representa la marca a la cual pertenece un producto.
@@ -54,8 +57,6 @@ Registra cada cambio realizado en el inventario de un producto.
 ### TipoMovimientoInventario
 Define el tipo de movimiento (entrada, salida, ajuste, devolución).
 
----
-
 ## 3. Relaciones entre entidades
 
 - Un cliente realiza pedidos.
@@ -67,11 +68,10 @@ Define el tipo de movimiento (entrada, salida, ajuste, devolución).
 - Una factura tiene un estado.
 - Un pedido incluye productos.
 - Un producto pertenece a una marca.
+- Un producto pertenece a una categoría.
 - Cada producto está controlado por el inventario.
 - El inventario registra movimientos.
 - Un movimiento inventario tiene un tipo de movimiento.
-
----
 
 ## 4. Cardinalidades
 
@@ -90,8 +90,11 @@ Define el tipo de movimiento (entrada, salida, ajuste, devolución).
 - Pedido (N) —— (M) Producto  
   Un pedido puede contener varios productos y un producto puede estar en muchos pedidos.
 
-- Producto (1) —— (N) Marca  
-  Una marca puede tener muchos productos, pero cada producto pertenece a una sola marca.
+- Marca (1) —— (N) Producto  
+  Una marca puede tener muchos productos, pero un producto pertenece a una sola marca.
+
+- Categoria (1) —— (N) Producto  
+  Una categoría puede tener muchos productos, pero un producto pertenece a una sola categoría.
 
 - Pedido (N) —— (1) EstadoPedido  
   Varios pedidos pueden tener el mismo estado.
@@ -106,15 +109,12 @@ Define el tipo de movimiento (entrada, salida, ajuste, devolución).
   Un inventario puede tener múltiples movimientos registrados.
 
 - TipoMovimientoInventario (1) —— (N) MovimientoInventario  
-  Un tipo de movimiento puede aplicarse a muchos registros de movimiento.
-
----
+  Un tipo de movimiento puede aplicarse a muchos registros.
 
 ## 5. Observaciones
 
-Este modelo conceptual formal permite representar de forma más completa
-la lógica del negocio, incluyendo control de estados, marcas, métodos de pago
-y trazabilidad del inventario mediante movimientos.
+Este modelo conceptual formal representa de manera completa la lógica del negocio,
+incluyendo clasificación de productos por categoría y marca, gestión de estados,
+métodos de pago y trazabilidad del inventario mediante movimientos.
 
-Este modelo servirá como base para el modelo lógico y la implementación física
-de la base de datos en las siguientes fases del proyecto.
+Este modelo servirá como base para el modelo lógico del sistema en la siguiente fase.
