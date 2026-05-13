@@ -1,6 +1,7 @@
 # Modelo Conceptual Formal – Tienda de Repuestos para Motos
 
 ## 1. Introducción
+
 Este documento describe el modelo conceptual formal del sistema de gestión
 para una tienda física de venta de repuestos para motos.
 
@@ -8,42 +9,73 @@ En este modelo se definen las entidades principales del sistema, sus relaciones
 y cardinalidades, sirviendo como base para el modelo lógico y la implementación
 de la base de datos.
 
+---
+
 ## 2. Entidades del sistema
+
 ### Cliente
 Representa a la persona que realiza compras en la tienda.
-Un cliente puede realizar uno o varios pedidos a lo largo del tiempo.
+Un cliente puede realizar uno o varios pedidos.
 
 ### Producto
 Representa un repuesto para motocicleta disponible para la venta.
-Cada producto cuenta con un precio y es controlado mediante inventario.
+Cada producto tiene precio, pertenece a una marca y se controla en inventario.
+
+### Marca
+Representa la marca a la cual pertenece un producto.
+Una marca puede tener múltiples productos asociados.
 
 ### Pedido
 Representa la solicitud de compra realizada por un cliente.
-Un pedido agrupa uno o varios productos seleccionados.
+Un pedido contiene uno o varios productos y posee un estado.
+
+### EstadoPedido
+Representa el estado del pedido (pendiente, completado, anulado).
 
 ### Factura
 Representa el comprobante de venta generado a partir de un pedido.
-Cada factura corresponde a un único pedido.
+Cada factura tiene un estado.
+
+### EstadoFactura
+Representa el estado de la factura (activa, anulada).
 
 ### Pago
 Representa el registro del pago realizado por una factura.
-Una factura puede tener uno o varios pagos.
+
+### MetodoPago
+Representa las formas de pago disponibles (efectivo, tarjeta, etc.).
 
 ### Inventario
-Representa el control de existencias de los productos en la tienda.
-Permite conocer la cantidad disponible de cada producto.
+Representa el control de existencias de los productos.
 
+### MovimientoInventario
+Registra cada cambio realizado en el inventario de un producto.
+
+### TipoMovimientoInventario
+Define el tipo de movimiento (entrada, salida, ajuste, devolución).
+
+---
 
 ## 3. Relaciones entre entidades
+
 - Un cliente realiza pedidos.
 - Un pedido pertenece a un cliente.
 - Un pedido genera una factura.
 - Una factura registra uno o varios pagos.
+- Un pago utiliza un método de pago.
+- Un pedido tiene un estado.
+- Una factura tiene un estado.
 - Un pedido incluye productos.
+- Un producto pertenece a una marca.
 - Cada producto está controlado por el inventario.
+- El inventario registra movimientos.
+- Un movimiento inventario tiene un tipo de movimiento.
+
+---
 
 ## 4. Cardinalidades
-- Cliente (1) —— (N) Pedido
+
+- Cliente (1) —— (N) Pedido  
   Un cliente puede realizar muchos pedidos, pero un pedido pertenece a un solo cliente.
 
 - Pedido (1) —— (1) Factura  
@@ -52,12 +84,37 @@ Permite conocer la cantidad disponible de cada producto.
 - Factura (1) —— (N) Pago  
   Una factura puede tener uno o varios pagos.
 
+- MetodoPago (1) —— (N) Pago  
+  Un método de pago puede utilizarse en muchos pagos.
+
 - Pedido (N) —— (M) Producto  
-  Un pedido puede incluir varios productos y un producto puede aparecer en muchos pedidos.
+  Un pedido puede contener varios productos y un producto puede estar en muchos pedidos.
+
+- Producto (1) —— (N) Marca  
+  Una marca puede tener muchos productos, pero cada producto pertenece a una sola marca.
+
+- Pedido (N) —— (1) EstadoPedido  
+  Varios pedidos pueden tener el mismo estado.
+
+- Factura (N) —— (1) EstadoFactura  
+  Varias facturas pueden tener el mismo estado.
 
 - Producto (1) —— (1) Inventario  
   Cada producto tiene un único registro de inventario.
 
+- Inventario (1) —— (N) MovimientoInventario  
+  Un inventario puede tener múltiples movimientos registrados.
+
+- TipoMovimientoInventario (1) —— (N) MovimientoInventario  
+  Un tipo de movimiento puede aplicarse a muchos registros de movimiento.
+
+---
+
 ## 5. Observaciones
-Este modelo conceptual formal podrá ajustarse en fases posteriores del proyecto
-para optimizar la normalización y la implementación física de la base de datos.
+
+Este modelo conceptual formal permite representar de forma más completa
+la lógica del negocio, incluyendo control de estados, marcas, métodos de pago
+y trazabilidad del inventario mediante movimientos.
+
+Este modelo servirá como base para el modelo lógico y la implementación física
+de la base de datos en las siguientes fases del proyecto.
