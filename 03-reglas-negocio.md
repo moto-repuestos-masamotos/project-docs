@@ -1,0 +1,110 @@
+# Reglas de Negocio y Datos Canónicos
+
+## 1. Reglas de negocio
+
+Las reglas de negocio definen cómo debe comportarse el sistema en cada proceso.
+Estas reglas serán implementadas más adelante mediante constraints, triggers y procedures en la base de datos.
+
+### Clientes
+
+Cada cliente debe tener un documento de identidad único en el sistema.
+No se puede eliminar un cliente que tenga pedidos o facturas registradas.
+La fecha de registro del cliente se guarda automáticamente al crearlo.
+
+### Productos
+
+Todo producto debe pertenecer a una categoría y a una marca registrada.
+El precio de un producto debe ser mayor a cero.
+El stock de un producto no puede ser negativo.
+La referencia o código de cada producto debe ser único en el sistema.
+No se puede eliminar un producto que haya sido incluido en algún pedido.
+
+### Pedidos
+
+Todo pedido debe estar asociado a un cliente existente.
+Un pedido debe tener al menos un producto.
+La cantidad de cada producto en el pedido debe ser mayor a cero.
+No se puede agregar al pedido un producto sin stock disponible.
+La fecha del pedido se registra automáticamente al momento de crearlo.
+El estado de un pedido solo puede ser: pendiente, completado o anulado.
+Un pedido anulado no puede generar factura.
+
+### Facturación
+
+Todo pedido completado debe generar obligatoriamente una factura.
+Cada factura corresponde a un único pedido.
+El total de la factura se calcula sumando el precio por cantidad de cada producto del pedido.
+Una factura no puede eliminarse del sistema, solo puede marcarse como anulada.
+La fecha de emisión de la factura se registra automáticamente.
+El número de factura debe ser único y consecutivo.
+
+### Pagos
+
+Todo pago debe estar asociado a una factura existente.
+El monto de un pago debe ser mayor a cero.
+El método de pago debe ser uno de los registrados en el catálogo del sistema.
+La suma de los pagos de una factura no puede superar el total de dicha factura.
+Cuando los pagos cubren el total de la factura, esta se marca automáticamente como pagada.
+
+### Inventario
+
+Al completarse un pedido, el stock de cada producto vendido se reduce automáticamente.
+No se puede vender un producto con stock en cero.
+Si un pedido es anulado, el stock de los productos involucrados se restaura.
+Todo cambio en el inventario queda registrado con fecha, tipo de movimiento y cantidad.
+
+### Categorías de productos
+
+| ID | Nombre |
+| 1 | Motor |
+| 2 | Frenos |
+| 3 | Transmisión |
+| 4 | Eléctrico |
+| 5 | Carrocería |
+| 6 | Suspensión |
+| 7 | Filtros |
+| 8 | Iluminación |
+| 9 | Accesorios generales |
+
+### Marcas
+
+| ID | Nombre |
+| 1 | Honda |
+| 2 | Yamaha |
+| 3 | Suzuki |
+| 4 | Kawasaki |
+| 5 | AKT |
+| 6 | Hero |
+| 7 | Bajaj |
+| 8 | Auteco |
+| 9 | KTM |
+| 10 | Genérico |
+
+### Métodos de pago
+
+| ID | Nombre |
+| 1 | Efectivo |
+| 2 | Transferencia bancaria |
+| 3 | Tarjeta débito |
+| 4 | Tarjeta crédito |
+
+### Estados de pedido
+
+| Estado | Descripción |
+| pendiente | El pedido fue registrado pero aún no se ha procesado |
+| completado | El pedido fue entregado y genera factura |
+| anulado | El pedido fue cancelado y no genera factura |
+
+### Estados de factura
+
+| Estado | Descripción |
+| activa | Factura válida y vigente |
+| anulada | Factura cancelada, permanece en el sistema |
+
+### Tipos de movimiento de inventario
+
+| ID | Nombre |
+| 1 | Entrada |
+| 2 | Salida por venta |
+| 3 | Ajuste manual |
+| 4 | Devolución por anulación |
