@@ -1,61 +1,73 @@
-# Reglas de Negocio y Datos Canónicos
+## Reglas de Negocio y Datos Canónicos
 
-## 1. Reglas de negocio
+### 0. Contexto de aplicación
+
+Las siguientes reglas de negocio se aplican directamente a los procesos definidos en el documento de requerimientos del sistema, particularmente en los procesos de venta, pedido, facturación, pagos e inventario.
+
+Estas reglas serán implementadas posteriormente en la base de datos mediante restricciones, triggers, procedures y validaciones SQL.
+
+---
+
+### 1. Reglas de negocio
 
 Las reglas de negocio definen cómo debe comportarse el sistema en cada proceso.
-Estas reglas serán implementadas más adelante mediante constraints, triggers y procedures en la base de datos.
 
-### Clientes
+#### Clientes
 
-Cada cliente debe tener un documento de identidad único en el sistema.
-No se puede eliminar un cliente que tenga pedidos o facturas registradas.
-La fecha de registro del cliente se guarda automáticamente al crearlo.
+RN-01 Cada cliente debe tener un documento de identidad único en el sistema.  
+RN-02 No se puede eliminar un cliente que tenga pedidos o facturas registradas.  
+RN-03 La fecha de registro del cliente se guarda automáticamente al crearlo.  
 
-### Productos
+#### Productos
 
-Todo producto debe pertenecer a una categoría y a una marca registrada.
-El precio de un producto debe ser mayor a cero.
-El stock de un producto no puede ser negativo.
-La referencia o código de cada producto debe ser único en el sistema.
-No se puede eliminar un producto que haya sido incluido en algún pedido.
+RN-04 Todo producto debe pertenecer a una categoría y a una marca registrada.  
+RN-05 El precio de un producto debe ser mayor a cero.  
+RN-06 El stock de un producto no puede ser negativo.  
+RN-07 La referencia o código de cada producto debe ser único en el sistema.  
+RN-08 No se puede eliminar un producto que haya sido incluido en algún pedido.  
 
-### Pedidos
+#### Pedidos
 
-Todo pedido debe estar asociado a un cliente existente.
-Un pedido debe tener al menos un producto.
-La cantidad de cada producto en el pedido debe ser mayor a cero.
-No se puede agregar al pedido un producto sin stock disponible.
-La fecha del pedido se registra automáticamente al momento de crearlo.
-El estado de un pedido solo puede ser: pendiente, completado o anulado.
-Un pedido anulado no puede generar factura.
+RN-09 Todo pedido debe estar asociado a un cliente existente.  
+RN-10 Un pedido debe tener al menos un producto.  
+RN-11 La cantidad de cada producto en el pedido debe ser mayor a cero.  
+RN-12 No se puede agregar al pedido un producto sin stock disponible.  
+RN-13 La fecha del pedido se registra automáticamente al momento de crearlo.  
+RN-14 El estado de un pedido solo puede ser: pendiente, completado o anulado.  
+RN-15 Un pedido anulado no puede generar factura.  
 
-### Facturación
+#### Facturación
 
-Todo pedido completado debe generar obligatoriamente una factura.
-Cada factura corresponde a un único pedido.
-El total de la factura se calcula sumando el precio por cantidad de cada producto del pedido.
-Una factura no puede eliminarse del sistema, solo puede marcarse como anulada.
-La fecha de emisión de la factura se registra automáticamente.
-El número de factura debe ser único y consecutivo.
+RN-16 Todo pedido completado debe generar obligatoriamente una factura.  
+RN-17 Cada factura corresponde a un único pedido.  
+RN-18 El total de la factura se calcula sumando el precio por cantidad de cada producto del pedido.  
+RN-19 Una factura no puede eliminarse del sistema, solo puede marcarse como anulada.  
+RN-20 La fecha de emisión de la factura se registra automáticamente.  
+RN-21 El número de factura debe ser único y consecutivo.  
 
-### Pagos
+#### Pagos
 
-Todo pago debe estar asociado a una factura existente.
-El monto de un pago debe ser mayor a cero.
-El método de pago debe ser uno de los registrados en el catálogo del sistema.
-La suma de los pagos de una factura no puede superar el total de dicha factura.
-Cuando los pagos cubren el total de la factura, esta se marca automáticamente como pagada.
+RN-22 Todo pago debe estar asociado a una factura existente.  
+RN-23 El monto de un pago debe ser mayor a cero.  
+RN-24 El método de pago debe ser uno de los registrados en el catálogo del sistema.  
+RN-25 La suma de los pagos de una factura no puede superar el total de dicha factura.  
+RN-26 Cuando los pagos cubren el total de la factura, esta se marca automáticamente como pagada.  
 
-### Inventario
+#### Inventario
 
-Al completarse un pedido, el stock de cada producto vendido se reduce automáticamente.
-No se puede vender un producto con stock en cero.
-Si un pedido es anulado, el stock de los productos involucrados se restaura.
-Todo cambio en el inventario queda registrado con fecha, tipo de movimiento y cantidad.
+RN-27 Al completarse un pedido, el stock de cada producto vendido se reduce automáticamente.  
+RN-28 No se puede vender un producto con stock en cero.  
+RN-29 Si un pedido es anulado, el stock de los productos involucrados se restaura.  
+RN-30 Todo cambio en el inventario queda registrado con fecha, tipo de movimiento y cantidad.  
 
-### Categorías de productos
+---
+
+### 2. Datos canónicos
+
+#### Categorías de productos
 
 | ID | Nombre |
+|----|------|
 | 1 | Motor |
 | 2 | Frenos |
 | 3 | Transmisión |
@@ -66,9 +78,10 @@ Todo cambio en el inventario queda registrado con fecha, tipo de movimiento y ca
 | 8 | Iluminación |
 | 9 | Accesorios generales |
 
-### Marcas
+#### Marcas
 
 | ID | Nombre |
+|----|------|
 | 1 | Honda |
 | 2 | Yamaha |
 | 3 | Suzuki |
@@ -80,30 +93,34 @@ Todo cambio en el inventario queda registrado con fecha, tipo de movimiento y ca
 | 9 | KTM |
 | 10 | Genérico |
 
-### Métodos de pago
+#### Métodos de pago
 
 | ID | Nombre |
+|----|------|
 | 1 | Efectivo |
 | 2 | Transferencia bancaria |
 | 3 | Tarjeta débito |
 | 4 | Tarjeta crédito |
 
-### Estados de pedido
+#### Estados de pedido
 
 | Estado | Descripción |
+|-------|-----------|
 | pendiente | El pedido fue registrado pero aún no se ha procesado |
 | completado | El pedido fue entregado y genera factura |
 | anulado | El pedido fue cancelado y no genera factura |
 
-### Estados de factura
+#### Estados de factura
 
 | Estado | Descripción |
+|-------|-----------|
 | activa | Factura válida y vigente |
 | anulada | Factura cancelada, permanece en el sistema |
 
-### Tipos de movimiento de inventario
+#### Tipos de movimiento de inventario
 
 | ID | Nombre |
+|----|------|
 | 1 | Entrada |
 | 2 | Salida por venta |
 | 3 | Ajuste manual |
