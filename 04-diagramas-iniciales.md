@@ -43,18 +43,3 @@ flowchart TD
  F --> G[Actualización de inventario]
  G --> H[Fin de la operación]
 ```
-
----
-
-## 3. Modelo conceptual inicial
-
-```mermaid
-erDiagram
-
- CLIENTE ||--o{ PEDIDO : realiza
- PEDIDO ||--|| FACTURA : genera
- FACTURA ||--|| PAGO : registra
- PEDIDO ||--o{ DETALLE_PEDIDO : contiene
- PRODUCTO ||--o{ DETALLE_PEDIDO : pertenece
- PRODUCTO ||--|| INVENTARIO : controla
-```

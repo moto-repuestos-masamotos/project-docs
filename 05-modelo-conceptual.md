@@ -91,13 +91,26 @@ Define el tipo de movimiento aplicado.
 
 ---
 
-### 5. Observaciones
+## 5. Modelo conceptual inicial
+
+```mermaid
+erDiagram
+
+ CLIENTE ||--o{ PEDIDO : realiza
+ PEDIDO ||--|| FACTURA : genera
+ FACTURA ||--|| PAGO : registra
+ PEDIDO ||--o{ DETALLE_PEDIDO : contiene
+ PRODUCTO ||--o{ DETALLE_PEDIDO : pertenece
+ PRODUCTO ||--|| INVENTARIO : controla
+```
+
+### 6. Observaciones
 
 El modelo conceptual representa la lógica completa del dominio, incluyendo clasificación de productos, control de estados, métodos de pago y trazabilidad del inventario.
 
 ---
 
-### 6. Relación con otros documentos
+### 7. Relación con otros documentos
 
 El modelo conceptual presentado se basa en:
 
