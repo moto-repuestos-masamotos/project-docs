@@ -1,5 +1,4 @@
-
-# Proyecto Final — Base de Datos  
+# Proyecto Final — Base de Datos
 ## Tienda de Repuestos para Motos
 
 ---
@@ -17,13 +16,22 @@
 - **Organización GitHub:** https://github.com/moto-repuestos-masamotos  
 
 ### Integrantes:
-- Santiago Manrique Gonzalez
-- Eric Mauricio Castañeda Murcia
-- Juan David Manrique Urbina
-- Francisco Bautista Vanegas
+
+- Santiago Manrique Gonzalez  
+- Eric Mauricio Castañeda Murcia  
+- Juan David Manrique Urbina  
+- Francisco Bautista Vanegas  
 
 ### Profesor / Revisor:
-- `ariel5253` - Jesus Ariel González Bonilla
+
+- `ariel5253` - Jesus Ariel González Bonilla  
+
+---
+
+## Repositorios del proyecto
+
+- 📂 Documentación: `project-docs`  
+- 🗄 Base de datos: `project-bd`  
 
 ---
 
@@ -31,27 +39,29 @@
 
 Este proyecto tiene como objetivo el diseño, documentación e implementación de una base de datos relacional para una tienda física de venta de repuestos para motos.  
 
-El sistema permitirá gestionar información relacionada con productos, clientes, pedidos, facturación obligatoria, pagos e inventario, garantizando la integridad y consistencia de los datos.
+El sistema permite gestionar productos, clientes, pedidos, facturación obligatoria, pagos e inventario, garantizando la integridad y consistencia de los datos.
 
 ---
 
 ## Contexto del dominio
 
-La tienda de repuestos para motos opera atendiendo directamente a clientes en un entorno físico, donde se registran ventas mediante pedidos, se generan facturas obligatorias, se procesan pagos y se controla el inventario disponible de productos.
+La tienda opera atendiendo clientes de manera presencial, registrando ventas mediante pedidos, generando facturas obligatorias, procesando pagos y controlando el inventario disponible.
 
 ---
 
 ## Alcance del sistema
 
 ### Incluye:
+
 - Gestión de pedidos  
 - Facturación obligatoria  
 - Registro de pagos  
-- Control de inventario por cantidad  
+- Control de inventario  
 - Gestión de productos  
 - Registro de clientes  
 
 ### No incluye:
+
 - Comercio electrónico  
 - Envíos  
 - Pagos en línea  
@@ -59,7 +69,7 @@ La tienda de repuestos para motos opera atendiendo directamente a clientes en un
 
 ---
 
-## Estructura del repositorio
+## Estructura del proyecto
 
 ```plaintext
 project-docs/
@@ -74,3 +84,33 @@ project-docs/
 ├── 08-diccionario-datos.md
 ├── 09-evidencias.md
 └── 10-conclusiones.md
+
+---
+
+## Implementación de la base de datos
+
+La base de datos fue desarrollada utilizando:
+
+- DDL: definición de tablas, llaves primarias y foráneas
+- DML: inserción de datos canónicos y volumétricos
+- Migraciones: controladas mediante Liquibase
+- Ejecución: mediante Docker
+
+---
+
+## Datos del sistema
+
+### Datos canónicos
+Datos base necesarios para el funcionamiento del sistema, tales como:
+
+- Categorías
+- Marcas
+- Métodos de pago
+- Estados del sistema
+
+--- 
+
+## Datos volumétricos
+Datos utilizados para pruebas del sistema, permitiendo validar relaciones y consultas complejas.
+
+---
